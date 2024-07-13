@@ -10,3 +10,5 @@ Object itself: json-value:a.json:jkl[].
 Key that contains `.`: json-value:a.json:jkl.p%2Eq[].
 
 File under the directory b: json-value:b/b.json:b.c[].
+
+No value (Warning error output will appear): json-value:a.json:xyz[].

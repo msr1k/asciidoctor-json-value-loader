@@ -3,6 +3,8 @@ require 'json'
 require 'uri'
 
 class JsonValueLoadInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
+  include Asciidoctor::Logging
+
   use_dsl
 
   named "json-value"
@@ -24,6 +26,7 @@ class JsonValueLoadInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
     json = JSON.parse(File.open(path, 'r:utf-8', &:read))
 
     content = json.dig(*query)
+    parent.logger.warn "json-value-loader: #{target} has no value." if content.nil?
 
     content = case content
     when String

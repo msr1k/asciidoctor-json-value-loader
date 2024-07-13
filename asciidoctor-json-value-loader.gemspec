@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = "asciidoctor-json-value-loader"
-  s.version     = "0.1.0"
-  s.summary     = "An asciidoctor extention to load specific JSON value"
+  s.version     = "0.1.1"
+  s.summary     = "An asciidoctor extention to load specific JSON value. (See: https://github.com/msr1k/asciidoctor-json-value-loader)"
   s.description = "Adds asciidoctor a funcitons to load specific JSON value from JSON file"
   s.authors     = ["msr1k"]
   s.email       = "msr0210@gmail.com"
