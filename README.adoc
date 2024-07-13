@@ -1,0 +1,134 @@
+= asciidoctor-json-value-loader
+:doctype: book
+:idprefix:
+:idseparator: -
+:toc: left
+:toclevels: 4
+ifndef::env-github[:icons: font]
+ifdef::env-github[]
+:status:
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+
+An https://asciidoctor.org/[asciidoctor] extention that loads specified JSON value
+from specified JSON file as a text.
+
+This extention offers just one inline macro named `json-value`.
+
+== Installation
+
+This extension is published on https://rubygems.org/[RubyGems] as asciidoctor-json-value-loader.
+
+After adding it to your project's Gemfile or gemspec, you can install it by just running Bundler.
+
+Or install it directly:
+
+  $ gem install asciidoctor-json-value-loader
+
+== Notation
+
+This extension offers only one inline macro named `json-value`.
+
+It requires following two.
+
+- **A JSON file path to load**
+- **A path to the value within that JSON**
+
+You should give them to `json-value` inline macro,
+as a concatnated string in the order of above list with comma-separated format.
+
+Where:
+
+* **A JSON file path**
++
+Arbitrary character can be used as a path except `:`.
+
+* **A path to the value within the JSON**
++
+--
+You can specify object keys and array index with dot-separated format. +
+This extention dig into the JSON with them from root to child in order.
+
+Each key string is decoded as a URI component in advance,
+so that the `.` can be used as a part of key string.
+
+In such case you need to convert `.` to `%2E` manually in advance.
+
+WARNING: A number is always recognized as Array index number, not key string of the Object.
+--
+
+
+
+=== Sample
+
+If following json file are given.
+
+[source,json]
+.a.json
+----
+{
+  "abc": "def",
+  "ghi": [ 1, 2, 3 ],
+  "jkl": { "mno": 12345, "p.q": "rst" }
+}
+----
+
+You can load its arbitrary value by specifying it like this.
+
+[source,asciidoctor]
+----
+Object access: json-value:a.json:abc[].
+
+Array element access: json-value:a.json:ghi.2[].
+
+Array element itself: json-value:a.json:ghi[].
+
+Object itself: json-value:a.json:jkl[].
+
+Key that contains `.`: json-value:a.json:jkl.p%2Eq[].
+----
+
+It will be converted as follows.
+
+[source,asciidoctor]
+----
+Object access: def.
+
+Array element access: 3.
+
+Array element itself: [1,2,3].
+
+Object itself: {"mno":12345,"p.q":"rst"}.
+
+Key that contains `.`: rst.
+----
+
+== How to utilize
+
+=== CLI
+
+Use Asciidoctor's `--require` option like this:
+
+  $ asciidoctor -r asciidoctor-json-value-loader sample.adoc
+
+=== Ruby
+
+When you require this gem it automatically extend Asciidoctor
+so that `json-value` inline macro properly works.
+
+[source,ruby]
+----
+require 'asciidoctor'
+require 'asciidoctor-json-value-loader'
+
+Asciidoctor.convert_file 'sample.adoc', safe: :safe
+----
+
+
+== LICENSE
+
+include::LICENSE[]

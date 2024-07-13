@@ -1,0 +1,12 @@
+
+Object access: json-value:a.json:abc[].
+
+Array element access: json-value:a.json:ghi.2[].
+
+Array element itself: json-value:a.json:ghi[].
+
+Object itself: json-value:a.json:jkl[].
+
+Key that contains `.`: json-value:a.json:jkl.p%2Eq[].
+
+File under the directory b: json-value:b/b.json:b.c[].
