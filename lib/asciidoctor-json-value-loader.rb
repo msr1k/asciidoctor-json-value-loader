@@ -8,13 +8,15 @@ class JsonValueLoadInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
   use_dsl
 
   named "json-value"
-  name_positional_attributes 'volnum'
+  name_positional_attributes 'delimitter'
+  default_attrs 'delimiter' => '/'
 
   def process parent, target, attrs
 
-    path, query = target.split(':')
+    path, query = target.split(':', 2)
+    delimiter = attrs['delimiter']
 
-    query = query.split('.').map do |q|
+    query = query.split(delimiter).map do |q|
       decoded = URI.decode_www_form_component(q)
       if decoded.match(/^\d+$/) then
         decoded.to_i

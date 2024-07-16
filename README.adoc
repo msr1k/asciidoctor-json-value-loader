@@ -39,7 +39,7 @@ It requires following two.
 - **A path to the value within that JSON**
 
 You should give them to `json-value` inline macro,
-as a concatnated string in the order of above list with comma-separated format.
+as a concatnated string in the order of above list with colon-separated format.
 
 Where:
 
@@ -50,13 +50,15 @@ Arbitrary character can be used as a path except `:`.
 * **A path to the value within the JSON**
 +
 --
-You can specify object keys and array index with dot-separated format. +
+You can specify object keys and array index with slash-separated format. +
 This extention dig into the JSON with them from root to child in order.
 
 Each key string is decoded as a URI component in advance,
-so that the `.` can be used as a part of key string.
+so that the `/` can be used as a part of key string.
 
-In such case you need to convert `.` to `%2E` manually in advance.
+In such case you need to convert `/` to `%2F` manually in advance.
+
+TIP: If you use delimiter attribute, you can change delimiter from '/' to any character you specified.
 
 WARNING: A number is always recognized as Array index number, not key string of the Object.
 --
@@ -73,7 +75,7 @@ If following json file are given.
 {
   "abc": "def",
   "ghi": [ 1, 2, 3 ],
-  "jkl": { "mno": 12345, "p.q": "rst" }
+  "jkl": { "mno": 12345, "p/q": "rst" }
 }
 ----
 
@@ -83,13 +85,13 @@ You can load its arbitrary value by specifying it like this.
 ----
 Object access: json-value:a.json:abc[].
 
-Array element access: json-value:a.json:ghi.2[].
+Array element access: json-value:a.json:ghi/2[].
 
 Array element itself: json-value:a.json:ghi[].
 
 Object itself: json-value:a.json:jkl[].
 
-Key that contains `.`: json-value:a.json:jkl.p%2Eq[].
+Key that contains `.`: json-value:a.json:jkl/p%2Fq[].
 ----
 
 It will be converted as follows.
@@ -102,7 +104,7 @@ Array element access: 3.
 
 Array element itself: [1,2,3].
 
-Object itself: {"mno":12345,"p.q":"rst"}.
+Object itself: {"mno":12345,"p/q":"rst"}.
 
 Key that contains `.`: rst.
 ----
@@ -130,6 +132,12 @@ Asciidoctor.convert_file 'sample.adoc', safe: :safe
 
 == Change log
 
+* Verison 0.2.0 (2024/07/17)
++
+--
+* Change inner-json path separater character.
+* Introduce the attribute `delimiter` to change the separater character.
+--
 * Verison 0.1.2 (2024/07/13)
 +
 --
