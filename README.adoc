@@ -132,6 +132,12 @@ Asciidoctor.convert_file 'sample.adoc', safe: :safe
 
 == Change log
 
+* Verison 0.2.1 (2024/08/31)
++
+--
+* Fixed the problem that path in this macro was wrongly resolved based on current directory. +
+  Now it will be resolved based on the adoc file currently processing.
+--
 * Verison 0.2.0 (2024/07/17)
 +
 --

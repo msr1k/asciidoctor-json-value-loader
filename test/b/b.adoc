@@ -1,0 +1,19 @@
+
+Object access: json-value:../a.json:abc[].
+
+Array element access: json-value:../a.json:ghi/2[].
+
+Array element access with delimiter '.': json-value:../c.json:ghi.2[delimiter='.'].
+
+Array element itself: json-value:../a.json:ghi[].
+
+Object itself: json-value:../a.json:jkl[].
+
+Key that contains `/`: json-value:../a.json:jkl/p%2Fq[].
+
+Key that contains `.` with delimiter '.': json-value:../c.json:jkl.p%2Eq[delimiter='.'].
+
+File under the directory b: json-value:b.json:b/c[].
+
+No value (Warning error output will appear): json-value:../a.json:xyz[].
+
