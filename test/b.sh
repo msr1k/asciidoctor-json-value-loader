@@ -1,1 +1,1 @@
-asciidoctor -r asciidoctor-json-value-include b/b.adoc
+asciidoctor -r asciidoctor-json-value-loader b/b.adoc
